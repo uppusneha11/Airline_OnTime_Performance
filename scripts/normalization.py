@@ -30,8 +30,8 @@ def fix_midnight_values(df):
 
 # Extact Hour Columns
 def extract_hour_columns(df):
-    df["CRS_DEP_HOUR"] = (df["CRS_DEP_TIME"] // 100).astype("Int64")
-    df["CRS_ARR_HOUR"] = (df["CRS_ARR_TIME"] // 100).astype("Int64")
+    df["SCH_DEP_HOUR"] = (df["CRS_DEP_TIME"] // 100).astype("Int64")
+    df["SCH_ARR_HOUR"] = (df["CRS_ARR_TIME"] // 100).astype("Int64")
     df["DEP_HOUR"] = (df["DEP_TIME"] // 100).astype("Int64")
     df["ARR_HOUR"] = (df["ARR_TIME"] // 100).astype("Int64")
 
