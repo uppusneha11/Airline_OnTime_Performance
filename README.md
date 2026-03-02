@@ -148,6 +148,13 @@ The analysis focuses on the following metrics:
 - **Delay by Carrier**: Performance comparison across airlines
 - **Route Statistics**: Delay patterns by origin/destination pair
 
+## 🔜 Next Steps (Planned)
+
+1. **Analyze the business for 2025 and validate** — Run analysis on 2025 data and validate the pipeline, S3, and PostgreSQL connections are working correctly
+2. **Load more data into S3** — Upload additional months/years of data to S3 for broader analysis
+3. **Create a dashboard** — Build an interactive Tableau dashboard connecting to PostgreSQL for route-level delay insights and visualizations
+4. **Automate monthly data loading** — Implement automated extraction of next month's data from BTS and load it into S3 and the database
+
 ## 📄 License
 
 This project uses publicly available data from the Bureau of Transportation Statistics.
