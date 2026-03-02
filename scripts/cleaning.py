@@ -33,10 +33,12 @@ def null_duplicate(df):
 def type_convert(df):
     df['FL_DATE'] = pd.to_datetime(df["FL_DATE"], format = "%m/%d/%Y %I:%M:%S %p", errors = 'coerce')
 
-    df.loc[:, "CANCELLED"] = pd.to_numeric(df["CANCELLED"], errors = "coerce")
-    df.loc[:, "DIVERTED"] = pd.to_numeric(df["DIVERTED"], errors = 'coerce')
-    df.loc[:, "CANCELLED"] = df["CANCELLED"].fillna(0).astype(int)
-    df.loc[:, "DIVERTED"] = df["DIVERTED"].fillna(0).astype(int)
+    # Convert numeric flags safely
+    flag_cols = ["CANCELLED", "DIVERTED", "DEP_DEL15", "ARR_DEL15"]
+
+    for col in flag_cols:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+        df[col] = df[col].fillna(0).astype(int)
 
     return df
 
@@ -112,16 +114,7 @@ def valid(df):
             assert "NaN" not in df[col].astype(str).unique(), f"{col} contains NaN"
 
 # The main cleaning function
-def clean_flights(input_path, output_path):
-    df = pd.read_csv(
-        input_path,
-        low_memory = False,
-        dtype = {
-            "OP_UNIQUE_CARRIER": "string",
-            "ORIGIN_STATE_ABR": "string",
-            "DEST_STATE_ABR": "string",
-            }
-        )
+def clean_flights(df):
 
     df = select_cols(df)
     df = null_duplicate(df)
@@ -129,5 +122,4 @@ def clean_flights(input_path, output_path):
     df = string_std(df)
     valid(df)
 
-    df.to_parquet(output_path, index = False)
     return df

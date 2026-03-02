@@ -72,13 +72,11 @@ def clean_cancelled_delays(df):
     return df
 
 # Main Normalization Function
-def normalize_flights(input_path, output_path):
-    df = load_data(input_path)
+def normalize_flights(df):
     df = create_date(df)
     df = fix_midnight_values(df)
     df = extract_hour_columns(df)
     df = create_time_bucket(df)
     df = clean_cancelled_delays(df)
 
-    df.to_parquet(output_path, index=False)
     return df

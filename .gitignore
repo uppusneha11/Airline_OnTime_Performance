@@ -1,6 +1,5 @@
-# Large data files
-Data/T_ONTIME_REPORTING.csv
-Data/LookUp_Tables/
+# Environment variables (contains secrets - never commit)
+.env
 
 # Python
 __pycache__/
