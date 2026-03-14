@@ -1,7 +1,7 @@
-from cleaning import clean_flights
-from normalization import normalize_flights
-from s3_utils import read_from_s3, write_to_s3
-from postgre_utils import delete_existing_data, load_to_postgres
+from .cleaning import clean_flights
+from .normalization import normalize_flights
+from .s3_utils import read_from_s3, write_to_s3
+from .postgre_utils import delete_existing_data, load_to_postgres, rebuild_dim_city_airports
 
 BUCKET = "airline-analytics-raw-data"
 
@@ -28,12 +28,15 @@ def process_month(year, month):
     print(f"Finished {year}-{month}")
 
 
-def run_pipeline():
+def run_data_pipeline():
     months = ["01","02","03","04","05","06","07","08","09","10"]
 
     for month in months:
         process_month("2025", month)
 
+    # Refresh city-airport dimension after loading all months
+    rebuild_dim_city_airports()
+
 
 if __name__ == "__main__":
-    run_pipeline()
+    run_data_pipeline()

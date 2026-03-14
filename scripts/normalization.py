@@ -1,5 +1,5 @@
 import pandas as pd
-from cleaning import null_duplicate
+from .cleaning import null_duplicate
 
 # Loading the data
 def load_data(input_path):

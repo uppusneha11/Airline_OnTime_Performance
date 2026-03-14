@@ -10,7 +10,7 @@ This project creates an automated pipeline to analyze airline on-time performanc
 - **Automated Data Pipeline**: Reads raw CSV from S3, cleans, normalizes, and loads into PostgreSQL
 - **Data Cleaning & Processing**: Transforms raw data into analysis-ready format
 - **Delay Analytics**: Analyzes patterns in flight delays across multiple dimensions
-- **Interactive Dashboard**: Visualizes delay patterns and insights (in development)
+- **Interactive Streamlit Dashboard**: Visualizes route-level delay/cancellation risk and business insights
 
 ### Problem Statement
 Users booking flights need to understand the likelihood and patterns of delays on their chosen route. This project provides actionable insights such as:
@@ -33,6 +33,8 @@ Airline_OnTime_Performance/
 ├── README.md
 ├── .env                            # Environment variables
 ├── requirements.txt
+├── streamlit_app.py                # Streamlit dashboard app
+├── run_pipeline.py                 # Runs data + analytics pipeline
 ├── ipynb_files/
 │   ├── clean.ipynb                 # Data cleaning notebook
 │   └── normalize.ipynb             # Data normalization notebook
@@ -65,8 +67,14 @@ Airline_OnTime_Performance/
 
 ### 3. **Running the Pipeline**
 ```bash
-python scripts/main.py
+python run_pipeline.py
 ```
+
+### 4. **Launching the Dashboard**
+```bash
+streamlit run streamlit_app.py
+```
+
 
 ## ☁️ AWS S3 Setup
 
@@ -109,7 +117,8 @@ AWS_DEFAULT_REGION=us-east-1
 
 - **Data Processing**: Python, Pandas, NumPy
 - **Cloud Storage**: AWS S3 (boto3)
-- **Database**: PostgreSQL (psycopg2)
+- **Database**: PostgreSQL (psycopg2, SQLAlchemy)
+- **Dashboard**: Streamlit, Plotly
 - **Notebooks**: Jupyter
 - **Data Formats**: CSV (raw), Parquet (cleaned/normalized)
 
@@ -120,7 +129,8 @@ AWS_DEFAULT_REGION=us-east-1
 3. Create `.env` with your PostgreSQL and AWS credentials
 4. Set up PostgreSQL database and `fact_flights` table
 5. Upload raw data to S3 (or place monthly CSVs in `Data/` and run `upload_raw_data.py`)
-6. Run the pipeline: `python scripts/main.py`
+6. Run the pipeline: `python run_pipeline.py`
+7. Launch dashboard: `streamlit run streamlit_app.py`
 
 ## 📝 Scripts Reference
 
@@ -133,6 +143,8 @@ AWS_DEFAULT_REGION=us-east-1
 | `postgre_utils.py` | PostgreSQL connection using credentials from `.env` |
 | `upload_raw_data.py` | Upload local monthly CSVs to S3 |
 | `analysis.py` | Route/airline/day/hour delay summaries |
+| `run_pipeline.py` | Orchestrates data pipeline + analytics generation |
+| `streamlit_app.py` | User + business dashboard with route filters and insights |
 
 ## 📚 Data Dictionary
 
@@ -152,7 +164,7 @@ The analysis focuses on the following metrics:
 
 1. **Analyze the business for 2025 and validate** — Run analysis on 2025 data and validate the pipeline, S3, and PostgreSQL connections are working correctly
 2. **Load more data into S3** — Upload additional months/years of data to S3 for broader analysis
-3. **Create a dashboard** — Build an interactive Tableau dashboard connecting to PostgreSQL for route-level delay insights and visualizations
+3. **Expand dashboard capabilities** — Add advanced business KPI views, route benchmarking, and stakeholder-focused pages
 4. **Automate monthly data loading** — Implement automated extraction of next month's data from BTS and load it into S3 and the database
 
 ## 📄 License
