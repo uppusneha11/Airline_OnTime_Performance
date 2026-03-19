@@ -1,18 +1,9 @@
 # Environment variables
 .env
 
-# BTS lookup/reference tables
-Data/LookUp_Tables/
-
-# Airport coordinates file
-Data/Airport Info.csv
-
-# Parquet files 
-Data/*.parquet
+# Entire Data/ folder — raw downloads, lookup tables, parquet files (large, not needed in repo)
+Data/
 *.parquet
-
-# Raw monthly CSV downloads
-Data/*.csv
 
 # analytics_tables/ is intentionally tracked — the Streamlit app reads these CSVs directly.
 # Re-generate them locally with: python -m analytics.run_analytics
