@@ -79,7 +79,8 @@ SELECT
     time_bucket,
     COUNT(*) AS total_flights,
     AVG(arr_del15)*100 AS delay_rate,
-    AVG(cancelled)*100 AS cancellation_rate
+    AVG(cancelled)*100 AS cancellation_rate,
+    AVG(arr_delay_new) AS avg_delay
 FROM fact_flights
 GROUP BY
 origin_airport_id,
@@ -87,4 +88,41 @@ dest_airport_id,
 op_unique_carrier,
 day_of_week,
 time_bucket
+"""
+
+
+DELAY_CAUSE_BY_AIRLINE = """
+SELECT
+    op_unique_carrier AS carrier,
+    COUNT(*) AS total_flights,
+    AVG(COALESCE(carrier_delay, 0))      AS avg_carrier_delay,
+    AVG(COALESCE(weather_delay, 0))      AS avg_weather_delay,
+    AVG(COALESCE(nas_delay, 0))          AS avg_nas_delay,
+    AVG(COALESCE(late_aircraft_delay, 0)) AS avg_late_aircraft_delay,
+    AVG(COALESCE(security_delay, 0))     AS avg_security_delay,
+    SUM(COALESCE(carrier_delay, 0))      AS total_carrier_delay_mins,
+    SUM(COALESCE(weather_delay, 0))      AS total_weather_delay_mins,
+    SUM(COALESCE(nas_delay, 0))          AS total_nas_delay_mins,
+    SUM(COALESCE(late_aircraft_delay, 0)) AS total_late_aircraft_delay_mins,
+    SUM(COALESCE(security_delay, 0))     AS total_security_delay_mins
+FROM fact_flights
+GROUP BY op_unique_carrier
+"""
+
+
+DELAY_TREND_BY_MONTH = """
+SELECT
+    year,
+    month,
+    COUNT(*) AS total_flights,
+    AVG(arr_del15)*100                    AS delay_rate,
+    AVG(arr_delay_new)                    AS avg_delay,
+    AVG(COALESCE(carrier_delay, 0))       AS avg_carrier_delay,
+    AVG(COALESCE(weather_delay, 0))       AS avg_weather_delay,
+    AVG(COALESCE(nas_delay, 0))           AS avg_nas_delay,
+    AVG(COALESCE(late_aircraft_delay, 0)) AS avg_late_aircraft_delay,
+    AVG(COALESCE(security_delay, 0))      AS avg_security_delay
+FROM fact_flights
+GROUP BY year, month
+ORDER BY year, month
 """

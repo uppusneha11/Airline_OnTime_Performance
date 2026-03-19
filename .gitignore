@@ -1,5 +1,21 @@
-# Environment variables (contains secrets - never commit)
+# Environment variables
 .env
+
+# BTS lookup/reference tables
+Data/LookUp_Tables/
+
+# Airport coordinates file
+Data/Airport Info.csv
+
+# Parquet files 
+Data/*.parquet
+*.parquet
+
+# Raw monthly CSV downloads
+Data/*.csv
+
+# analytics_tables/ is intentionally tracked — the Streamlit app reads these CSVs directly.
+# Re-generate them locally with: python -m analytics.run_analytics
 
 # Python
 __pycache__/
@@ -26,7 +42,7 @@ wheels/
 .installed.cfg
 *.egg
 
-# Jupyter Notebook
+# Jupyter Notebooks
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
@@ -36,7 +52,6 @@ wheels/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Virtual environments
 venv/

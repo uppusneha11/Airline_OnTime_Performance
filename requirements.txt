@@ -1,25 +1,4 @@
-# Environment & credentials
-python-dotenv==1.0.0
-
-# Database
-psycopg2-binary==2.9.9
-sqlalchemy==2.0.23
-
-# Cloud storage
-boto3==1.37.22
-
-# Data processing
-pandas==2.1.4
-numpy==1.26.3
-pyarrow==14.0.1
-
-# Jupyter notebooks
-jupyter==1.0.0
-jupyterlab==4.0.9
-
-# Visualization & analysis
-matplotlib==3.8.2
-seaborn==0.13.0
-scikit-learn==1.3.2
-plotly==5.18.0
-streamlit==1.39.0
+streamlit>=1.35.0
+pandas>=1.5.0
+plotly>=5.0.0
+streamlit-searchbox>=0.1.20
